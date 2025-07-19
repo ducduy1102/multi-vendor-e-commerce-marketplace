@@ -26,7 +26,6 @@ const Layout = async ({ children }: Props) => {
       },
     },
   });
-  console.log("🚀 ~ Layout ~ data:", data);
 
   const formattedData = data.docs.map((doc) => ({
     ...doc,
@@ -36,8 +35,6 @@ const Layout = async ({ children }: Props) => {
       subcategories: undefined,
     })),
   }));
-
-  console.log("🚀 ~ Layout ~ data:", formattedData);
 
   return (
     <div className='flex flex-col min-h-screen'>
