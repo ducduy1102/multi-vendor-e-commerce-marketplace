@@ -86,6 +86,10 @@ export interface Category {
   updatedAt: string;
   createdAt: string;
   name: string;
+  slug: string;
+  color?: string;
+  parent?: string | Category | null;
+  subcategories?: Category[];
 }
 
 /**
