@@ -30,16 +30,16 @@ export const SearchInput = ({ disabled, data }: Props) => {
           placeholder='Seach products'
           disabled={disabled}
         />
-        {/**TODO: Add categories view all button */}
-        <Button
-          variant='elevated'
-          className='size-12 shrink-0 flex lg:hidden'
-          onClick={() => setIsSidebarOpen(true)}
-        >
-          <ListFilterIcon />
-        </Button>
-        {/**TODO: Add library button */}
       </div>
+      {/**TODO: Add categories view all button */}
+      <Button
+        variant='elevated'
+        className='size-12 shrink-0 flex lg:hidden'
+        onClick={() => setIsSidebarOpen(true)}
+      >
+        <ListFilterIcon />
+      </Button>
+      {/**TODO: Add library button */}
     </div>
   );
 };
