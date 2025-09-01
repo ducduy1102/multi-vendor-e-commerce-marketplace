@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { trpc } from "@/trpc/client";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
-// import { CustomCategory } from "@/app/(app)/(home)/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sheet,
