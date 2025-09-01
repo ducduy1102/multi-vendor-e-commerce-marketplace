@@ -5,12 +5,12 @@ import Link from "next/link";
 
 import { SubcategoryMenu } from "@/app/(app)/(home)/search-filters/subcategory-menu";
 import { useDropdownPosition } from "@/app/(app)/(home)/search-filters/use-dropdown-position";
-import { CustomCategory } from "@/app/(app)/(home)/types";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 interface Props {
-  category: CustomCategory;
+  category: CategoriesGetManyOutput[1];
   isActive?: boolean;
   isNavigationHovered?: boolean;
 }

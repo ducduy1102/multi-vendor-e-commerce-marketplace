@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 import { CategoryDropdown } from "@/app/(app)/(home)/search-filters/categories-dropdown";
-import { CustomCategory } from "@/app/(app)/(home)/types";
 import { ListFilterIcon } from "lucide-react";
 import { CategoriesSidebar } from "@/app/(app)/(home)/search-filters/categories-sidebar";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 interface CategoriesProps {
-  data: CustomCategory[];
+  data: CategoriesGetManyOutput;
 }
 
 export const Categories = ({ data }: CategoriesProps) => {
@@ -66,7 +66,6 @@ export const Categories = ({ data }: CategoriesProps) => {
       <CategoriesSidebar
         open={isSidebarOpen}
         onOpenChange={setIsSidebarOpen}
-        data={data}
       />
 
       {/* Hidden div to measure all items */}
