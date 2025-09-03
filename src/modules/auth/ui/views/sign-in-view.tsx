@@ -1,0 +1,132 @@
+"use client";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
+
+import { loginSchema } from "@/modules/auth/schemas";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import Link from "next/link";
+
+import { Poppins } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { trpc } from "@/trpc/client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["700"],
+});
+
+export const SignInView = () => {
+  const router = useRouter();
+
+  const login = trpc.auth.login.useMutation({
+    onSuccess() {
+      router.push("/");
+    },
+    onError(err) {
+      toast.error(err.message);
+    },
+  });
+
+  const form = useForm<z.infer<typeof loginSchema>>({
+    mode: "all",
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+    login.mutate(values);
+  };
+
+  return (
+    <div className='grid grid-cols-1 lg:grid-cols-5'>
+      <div className='bg-[#f4f4f0] h-screen w-full lg:col-span-3 overflow-y-auto'>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className='flex flex-col gap-8 p-4 lg:p-16'
+          >
+            <div className='flex items-center justify-between mb-8'>
+              <Link href='/'>
+                <span
+                  className={cn("text-2xl font-semibold", poppins.className)}
+                >
+                  Brand
+                </span>
+              </Link>
+              <Button
+                asChild
+                variant='ghost'
+                size='sm'
+                className='text-base border-none underline'
+              >
+                <Link prefetch href='/sign-up'>
+                  <span>Sign up</span>
+                </Link>
+              </Button>
+            </div>
+
+            <h1 className='text-4x font-medium'>Welcome back to Brand</h1>
+
+            <FormField
+              name='email'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className='text-base'>Email</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name='password'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className='text-base'>Password</FormLabel>
+                  <FormControl>
+                    <Input {...field} type='password' />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              disabled={login.isPending}
+              type='submit'
+              size='lg'
+              variant='elevated'
+              className='bg-black text-white hover:bg-pink-400 hover:text-primary'
+            >
+              Log in
+            </Button>
+          </form>
+        </Form>
+      </div>
+      <div
+        className='h-screen  w-full lg:col-span-2 hidden lg:block'
+        style={{
+          background: "url(/auth-bg.png) center/cover",
+        }}
+      >
+        Background column
+      </div>
+    </div>
+  );
+};
