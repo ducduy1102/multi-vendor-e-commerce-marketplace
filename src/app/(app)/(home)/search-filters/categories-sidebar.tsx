@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { trpc } from "@/trpc/client";
+import { useTRPC } from "@/trpc/client";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -13,6 +13,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 
 interface Props {
   open: boolean;
@@ -20,7 +21,8 @@ interface Props {
 }
 
 export const CategoriesSidebar = ({ open, onOpenChange }: Props) => {
-  const [data] = trpc.categories.getMany.useSuspenseQuery();
+  const trpc = useTRPC();
+  const { data } = useQuery(trpc.categories.getMany.queryOptions());
 
   const router = useRouter();
 

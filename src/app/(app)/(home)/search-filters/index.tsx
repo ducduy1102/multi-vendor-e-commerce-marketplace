@@ -2,15 +2,17 @@
 
 import { Categories } from "@/app/(app)/(home)/search-filters/categories";
 import { SearchInput } from "@/app/(app)/(home)/search-filters/search-input";
-import { trpc } from "@/trpc/client";
+import { useTRPC } from "@/trpc/client";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 export const SearchFilter = () => {
-  const [data] = trpc.categories.getMany.useSuspenseQuery();
+  const trpc = useTRPC();
+  const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
 
   return (
-    <div className='px-4 lg:px-12 py-8 border-b flex flex-col gap-4 w-full'
+    <div
+      className='px-4 lg:px-12 py-8 border-b flex flex-col gap-4 w-full'
       style={{ backgroundColor: "#f5f5f5" }}
-    
     >
       <SearchInput />
       <div className='hidden lg:block'>

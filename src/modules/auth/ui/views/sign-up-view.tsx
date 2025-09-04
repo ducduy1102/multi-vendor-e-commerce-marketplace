@@ -20,9 +20,10 @@ import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { trpc } from "@/trpc/client";
+import { useTRPC } from "@/trpc/client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -32,14 +33,20 @@ const poppins = Poppins({
 export const SignUpView = () => {
   const router = useRouter();
 
-  const register = trpc.auth.register.useMutation({
-    onSuccess() {
-      router.push("/");
-    },
-    onError(err) {
-      toast.error(err.message);
-    },
-  });
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+
+  const register = useMutation(
+    trpc.auth.register.mutationOptions({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
+        router.push("/");
+      },
+      onError(err) {
+        toast.error(err.message);
+      },
+    })
+  );
 
   const form = useForm<z.infer<typeof registerSchema>>({
     mode: "all",
