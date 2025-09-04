@@ -4,7 +4,8 @@ import {
   SearchFilter,
   SearchFiltersSkeleton,
 } from "@/app/(app)/(home)/search-filters";
-import { HydrateClient, trpc } from "@/trpc/server";
+import { getQueryClient, trpc } from "@/trpc/server";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { Suspense } from "react";
 
 interface Props {
@@ -14,16 +15,18 @@ interface Props {
 // http://localhost:3000/admin
 
 const Layout = async ({ children }: Props) => {
-  void trpc.categories.getMany.prefetch();
+  const queryClient = getQueryClient();
+
+  void queryClient.prefetchQuery(trpc.categories.getMany.queryOptions());
 
   return (
     <div className='flex flex-col min-h-screen'>
       <Navbar />
-      <HydrateClient>
+      <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={<SearchFiltersSkeleton />}>
           <SearchFilter />
         </Suspense>
-      </HydrateClient>
+      </HydrationBoundary>
       <div className='flex-1 bg-[#f4f4f0]'>{children}</div>
       <Footer />
     </div>
