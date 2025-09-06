@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 
-import { CategoriesSidebar } from "@/app/(app)/(home)/search-filters/categories-sidebar";
+import { CategoriesSidebar } from "@/modules/home/ui/components/search-filters/categories-sidebar";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
