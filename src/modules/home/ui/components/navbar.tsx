@@ -2,7 +2,7 @@
 
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
-import NavbarSidebar from "@/app/(app)/(home)/navbar-sidebar";
+import NavbarSidebar from "@/modules/home/ui/components/navbar-sidebar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
