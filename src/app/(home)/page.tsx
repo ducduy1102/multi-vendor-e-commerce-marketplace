@@ -4,6 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
 
+/**
+ * Renders a static layout containing a button, input, progress bar, textarea, and checkbox.
+ *
+ * This component displays a vertically stacked group of common UI elements for demonstration or prototyping purposes.
+ */
 export default function Home() {
   return (
     <div className='p-4'>
