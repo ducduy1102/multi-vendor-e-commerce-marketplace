@@ -20,8 +20,6 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { formatCurrency, generateTenantURL } from "@/lib/utils";
 
-// import { CartButton } from "@/modules/products/ui/components/cart-button";
-
 const CartButton = dynamic(
   () =>
     import("@/modules/products/ui/components/cart-button").then(
@@ -113,7 +111,11 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
             <div className='border-t lg:border-top-0 lg:border-l h-full'>
               <div className='flex flex-col gap-4 p-6 border-b'>
                 <div className='flex items-center gap-2'>
-                  <CartButton productId={productId} tenantSlug={tenantSlug} />
+                  <CartButton
+                    isPurchased={data.isPurchased}
+                    productId={productId}
+                    tenantSlug={tenantSlug}
+                  />
                   <Button
                     className='size-12'
                     variant='elevated'
