@@ -12,8 +12,6 @@ import {
   ProductCardSkeleton,
 } from "@/modules/library/ui/components/product-cart";
 
-// TODO: Add real ratings
-
 export const ProductList = () => {
   const trpc = useTRPC();
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
@@ -52,8 +50,8 @@ export const ProductList = () => {
               imageUrl={product.image?.url}
               tenantSlug={product.tenant?.slug}
               tenantImageUrl={product.tenant?.image?.url}
-              reviewRating={3}
-              reviewCount={5}
+              reviewRating={product.reviewRating}
+              reviewCount={product.reviewsCount}
             />
           ))}
       </div>
