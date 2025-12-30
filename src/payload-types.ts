@@ -263,7 +263,7 @@ export interface Order {
   user: string | User;
   product: string | Product;
   /**
-   * Stripe checkout sesssion associated with the order
+   * Stripe checkout session associated with the order
    */
   stripeCheckoutSessionId: string;
   updatedAt: string;

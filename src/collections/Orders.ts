@@ -38,7 +38,7 @@ export const Orders: CollectionConfig = {
       type: "text",
       required: true,
       admin: {
-        description: "Stripe checkout sesssion associated with the order",
+        description: "Stripe checkout session associated with the order",
       },
     },
   ],
