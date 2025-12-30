@@ -22,6 +22,9 @@ export const productsRouter = createTRPCRouter({
         collection: "products",
         id: input.id,
         depth: 2, // Load the "product.image", "product.tenant" and "product.tenant.image"
+        select: {
+          content: false,
+        },
       });
 
       let isPurchased = false;
@@ -60,23 +63,24 @@ export const productsRouter = createTRPCRouter({
         },
       });
 
-      const reviewRating = reviews.docs.length === 0 ? 0 : reviews.docs.reduce(
-        (acc, review) => acc + review.rating,
-        0
-      ) / reviews.totalDocs;
+      const reviewRating =
+        reviews.docs.length === 0
+          ? 0
+          : reviews.docs.reduce((acc, review) => acc + review.rating, 0) /
+            reviews.totalDocs;
 
       const ratingDistribution: Record<number, number> = {
         5: 0,
         4: 0,
         3: 0,
-        2: 0, 
+        2: 0,
         1: 0,
       };
 
-      if(reviews.totalDocs > 0) {
+      if (reviews.totalDocs > 0) {
         reviews.docs.forEach((review) => {
           const rating = review.rating;
-          if(rating >=1 && rating <= 5) {
+          if (rating >= 1 && rating <= 5) {
             ratingDistribution[rating] = (ratingDistribution[rating] || 0) + 1;
           }
         });
@@ -84,7 +88,9 @@ export const productsRouter = createTRPCRouter({
         Object.keys(ratingDistribution).forEach((key) => {
           const rating = Number(key);
           const count = ratingDistribution[rating] || 0;
-          ratingDistribution[rating] = Math.round((count / reviews.totalDocs) * 100);
+          ratingDistribution[rating] = Math.round(
+            (count / reviews.totalDocs) * 100
+          );
         });
       }
 
@@ -199,6 +205,9 @@ export const productsRouter = createTRPCRouter({
         sort,
         page: input.cursor,
         limit: input.limit,
+        select: {
+          content: false,
+        },
       });
 
       const dataWithSummarizedReviews = await Promise.all(
