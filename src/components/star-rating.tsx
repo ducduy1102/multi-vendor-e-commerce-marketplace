@@ -13,7 +13,6 @@ interface StarRatingProps {
 
 export const StarRating = ({
   rating,
-  className,
   iconClassName,
   text,
 }: StarRatingProps) => {
