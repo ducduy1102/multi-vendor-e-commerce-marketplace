@@ -274,7 +274,7 @@ export interface Product {
    */
   isPrivate?: boolean | null;
   /**
-   * If checked, product will not be archived
+   * If checked, product will be archived
    */
   isArchived?: boolean | null;
   updatedAt: string;
