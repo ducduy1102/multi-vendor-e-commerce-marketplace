@@ -17,9 +17,8 @@ export const generateAuthCookie = async ({ prefix, value }: Props) => {
     // TODO: Ensure cross-domain cookie sharing
     // brand.com // initial cookie
     // brand-fake.com // cookie does not exist here
-
-    // sameSite: "none",
-    // secure: true,
-    // domain: ""
+    sameSite: "none",
+    domain: process.env.NEXT_PUBLIC_ROOT_DOMAIN!,
+    secure: process.env.NODE_ENV === "production",
   });
 };
