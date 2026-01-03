@@ -117,6 +117,7 @@ export const productsRouter = createTRPCRouter({
       z.object({
         cursor: z.number().default(1),
         limit: z.number().default(DEFAULT_LIMIT),
+        search: z.string().nullable().optional(),
         category: z.string().nullable().optional(),
         minPrice: z.string().nullable().optional(),
         maxPrice: z.string().nullable().optional(),
@@ -169,7 +170,7 @@ export const productsRouter = createTRPCRouter({
         // If we are loading products for public storefront (no tenantSlug)
         // Make sure to not load products set to "isPrivate: true" (using reverse note_equals logic)
         // These products are exculusively private to the tenant store
-        
+
         where["isPrivate"] = {
           not_equals: true,
         };
@@ -215,6 +216,12 @@ export const productsRouter = createTRPCRouter({
       if (input.tags && input.tags.length > 0) {
         where["tags.name"] = {
           in: input.tags,
+        };
+      }
+
+      if (input.search) {
+        where["name"] = {
+          like: input.search,
         };
       }
 
