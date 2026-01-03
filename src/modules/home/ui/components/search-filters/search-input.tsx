@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 
 import Link from "next/link";
@@ -10,17 +8,16 @@ import { useTRPC } from "@/trpc/client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import { useProductFilters } from "@/modules/products/hooks/use-product-filters";
-
 import { CategoriesSidebar } from "@/modules/home/ui/components/search-filters/categories-sidebar";
 
 interface Props {
   disabled?: boolean;
+  defaultValue?: string | undefined;
+  onChange?: (value: string) => void;
 }
 
-export const SearchInput = ({ disabled }: Props) => {
-  const [filters, setFilters] = useProductFilters();
-  const [searchValue, setSearchValue] = useState(filters.search);
+export const SearchInput = ({ disabled, defaultValue, onChange }: Props) => {
+  const [searchValue, setSearchValue] = useState(defaultValue || "");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const trpc = useTRPC();
@@ -28,10 +25,10 @@ export const SearchInput = ({ disabled }: Props) => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setFilters({ search: searchValue });
+      onChange?.(searchValue);
     }, 500);
     return () => clearTimeout(timeoutId);
-  }, [searchValue, setFilters]);
+  }, [searchValue, onChange]);
 
   return (
     <div className='flex items-center gap-2 w-full'>
